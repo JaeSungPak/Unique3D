@@ -1,7 +1,6 @@
 accelerate
 datasets
 diffusers>=0.26.3
-fire
 gradio
 jaxtyping
 numba
