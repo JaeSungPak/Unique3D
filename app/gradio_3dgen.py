@@ -10,6 +10,8 @@ from scripts.utils import save_glb_and_video
 from scripts.multiview_inference import geo_reconstruct
 
 def generate3dv2(preview_img, input_processing, seed, render_video=True, do_refine=True, expansion_weight=0.1, init_type="std"):
+    name = preview_img
+    
     if preview_img is None:
         raise gr.Error("preview_img is none")
     if isinstance(preview_img, str):
@@ -24,7 +26,7 @@ def generate3dv2(preview_img, input_processing, seed, render_video=True, do_refi
     vertices[..., [0, 2]] = - vertices[..., [0, 2]]
     new_meshes = Meshes(verts=[vertices], faces=new_meshes.faces_list(), textures=new_meshes.textures)
     
-    ret_mesh, video = save_glb_and_video(preview_img, new_meshes, with_timestamp=True, dist=3.5, fov_in_degrees=2 / 1.35, cam_type="ortho", export_video=render_video)
+    ret_mesh, video = save_glb_and_video(name, new_meshes, with_timestamp=True, dist=3.5, fov_in_degrees=2 / 1.35, cam_type="ortho", export_video=render_video)
     return ret_mesh, video
 
 #######################################
