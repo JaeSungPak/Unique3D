@@ -12,6 +12,7 @@ import torch.nn.functional as F
 from typing import List, Tuple
 from PIL import Image
 import trimesh
+from scripts.mesh import Mesh, safe_normalize
 
 providers = [
     ('CUDAExecutionProvider', {
@@ -233,10 +234,36 @@ def save_py3dmesh_with_trimesh_fast(meshes: Meshes, save_glb_path, apply_sRGB_to
     assert 0 <= np_color.min() and np_color.max() <= 1, f"min={np_color.min()}, max={np_color.max()}"
     mesh = trimesh.Trimesh(vertices=vertices, faces=triangles, vertex_colors=np_color)
     mesh.remove_unreferenced_vertices()
+
+    # def save_texture(m: Meshes):
+    #     obj, data = trimesh.exchange.export.export_obj(m, include_texture=True)
+
+    #     with trimesh.util.TemporaryDirectory() as path:
+    #         # where is the OBJ file going to be saved                
+    #         obj_path = os.path.join(path, 'test.obj')
+    #         with open(obj_path, 'w') as f:
+    #             f.write(obj)
+    #         # save the MTL and images                                
+    #         for k, v in data.items():
+    #             with open(os.path.join(path, k), 'wb') as f:
+    #                 f.write(v)
+    #         # reload the mesh from the export                        
+    #         rec = trimesh.load(obj_path)
+
     # save mesh
+    # mesh.export(save_glb_path)
+    # test_mesh = Mesh.load("app/examples/o_1.glb")
+    # test_mesh.albedo = torch.tensor(np_color)
+    # test_mesh.write("test.obj")
+
+    # import pdb; pdb.set_trace()
+    
     mesh.export(save_glb_path)
-    if save_glb_path.endswith(".glb"):
-        fix_vert_color_glb(save_glb_path)
+    mesh.export(save_glb_path.replace(".glb", ".obj"))
+
+    # if save_glb_path.endswith(".glb"):
+    #     fix_vert_color_glb(save_glb_path)
+
     print(f"saving to {save_glb_path}")
 
 
