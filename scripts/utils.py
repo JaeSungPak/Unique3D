@@ -268,11 +268,8 @@ def save_py3dmesh_with_trimesh_fast(meshes: Meshes, save_glb_path, apply_sRGB_to
 
 
 def save_glb_and_video(save_mesh_prefix: str, meshes: Meshes, with_timestamp=True, dist=3.5, azim_offset=180, resolution=512, fov_in_degrees=1 / 1.15, cam_type="ortho", view_padding=60, export_video=True) -> Tuple[str, str]:
-    import time
     if '.' in save_mesh_prefix:
         save_mesh_prefix = ".".join(save_mesh_prefix.split('.')[:-1])
-    if with_timestamp:
-        save_mesh_prefix = save_mesh_prefix + f"_{int(time.time())}"
     ret_mesh = save_mesh_prefix + ".glb"
     # optimizied version
     save_py3dmesh_with_trimesh_fast(meshes, ret_mesh)
