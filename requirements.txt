@@ -4,7 +4,7 @@ diffusers>=0.26.3
 gradio
 jaxtyping
 numba
-numpy
+numpy==1.25.2
 git+https://github.com/NVlabs/nvdiffrast.git
 omegaconf>=2.3.0
 onnxruntime_gpu
